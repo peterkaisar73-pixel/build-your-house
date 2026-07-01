@@ -1,431 +1,5 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صخرة العهد</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg: #F3EEE1;
-    --bg-deep: #E9E1CB;
-    --card: #FFFDF8;
-    --ink: #2E2A22;
-    --ink-soft: #5B5344;
-    --gold: #A97B2F;
-    --gold-light: #C9A25C;
-    --stone: #8A7F6C;
-    --stone-line: #D8CDB4;
-    --deep: #3F4A3E;
-    --accent: #97362B;
-    --shadow: rgba(58, 45, 20, 0.18);
-  }
-
-  *{ box-sizing: border-box; }
-
-  html, body{
-    margin:0;
-    padding:0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Cairo', sans-serif;
-    line-height: 1.75;
-  }
-
-  .wrap{
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-  }
-
-  /* ---------- Header ---------- */
-  .header{
-    position: relative;
-    background: radial-gradient(circle at 50% 0%, var(--bg-deep) 0%, var(--bg) 70%);
-    padding: 56px 20px 40px;
-    text-align: center;
-    border-bottom: 1px solid var(--stone-line);
-    margin-bottom: 34px;
-  }
-
-  .header .eyebrow{
-    font-size: 13px;
-    letter-spacing: 2px;
-    color: var(--gold);
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .header h1{
-    font-family: 'Aref Ruqaa', serif;
-    font-weight: 700;
-    font-size: clamp(40px, 8vw, 64px);
-    margin: 0 0 12px;
-    color: var(--ink);
-    letter-spacing: 1px;
-  }
-
-  .header .sub{
-    font-size: 17px;
-    color: var(--ink-soft);
-    max-width: 480px;
-    margin: 0 auto;
-  }
-
-  .divider{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    margin: 22px auto 0;
-  }
-  .divider span{
-    width:6px; height:6px; border-radius:50%;
-    background: var(--gold);
-    display:inline-block;
-  }
-  .divider .line{
-    width:70px; height:1px; background: var(--stone-line);
-  }
-
-  /* ---------- Info strip ---------- */
-  .info-strip{
-    display:flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    justify-content: center;
-    margin: 30px 0 38px;
-  }
-  .chip{
-    background: var(--card);
-    border: 1px solid var(--stone-line);
-    border-radius: 999px;
-    padding: 10px 22px;
-    font-size: 14px;
-    color: var(--ink-soft);
-    display:flex;
-    align-items:center;
-    gap:8px;
-  }
-  .chip b{ color: var(--ink); font-weight:600; }
-
-  /* ---------- Intro tablet ---------- */
-  .intro{
-    background: var(--card);
-    border: 1px solid var(--stone-line);
-    border-radius: 18px 18px 6px 6px;
-    padding: 34px 30px;
-    position: relative;
-    box-shadow: 0 10px 30px var(--shadow);
-    margin-bottom: 46px;
-  }
-  .intro::before{
-    content:"";
-    position:absolute;
-    top:-1px; right:50%;
-    transform: translateX(50%);
-    width: 90px; height: 4px;
-    background: var(--gold);
-    border-radius: 0 0 6px 6px;
-  }
-  .intro p{
-    margin: 0 0 12px;
-    font-size: 16px;
-    color: var(--ink-soft);
-  }
-  .intro p:last-child{ margin-bottom:0; }
-  .intro strong{ color: var(--ink); }
-
-  /* ---------- Section title ---------- */
-  .section-title{
-    text-align:center;
-    margin-bottom: 26px;
-  }
-  .section-title h2{
-    font-family:'Aref Ruqaa', serif;
-    font-size: 28px;
-    margin:0 0 6px;
-    color: var(--ink);
-  }
-  .section-title p{
-    font-size: 14px;
-    color: var(--stone);
-    margin:0;
-  }
-
-  /* ---------- Twin tablets form ---------- */
-  form{ margin: 0; }
-
-  .tablets{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    align-items: start;
-    position: relative;
-  }
-
-  @media (max-width: 620px){
-    .tablets{ grid-template-columns: 1fr; }
-  }
-
-  .tablet{
-    background: var(--card);
-    border: 1px solid var(--stone-line);
-    border-radius: 50% 50% 10px 10px / 26px 26px 10px 10px;
-    padding: 42px 26px 26px;
-    box-shadow: 0 12px 26px var(--shadow);
-    position: relative;
-  }
-
-  .tablet .tag{
-    position:absolute;
-    top: 14px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    color: var(--gold);
-    font-weight: 700;
-    text-transform: uppercase;
-    background: var(--card);
-    padding: 2px 10px;
-  }
-
-  .field{
-    margin-bottom: 18px;
-  }
-  .field:last-child{ margin-bottom: 0; }
-
-  label{
-    display:block;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 6px;
-  }
-
-  input{
-    width:100%;
-    padding: 12px 14px;
-    border: 1px solid var(--stone-line);
-    border-radius: 10px;
-    background: #FBF9F3;
-    font-family:'Cairo', sans-serif;
-    font-size: 15px;
-    color: var(--ink);
-    transition: border-color .15s, box-shadow .15s;
-  }
-  input:focus{
-    outline: none;
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(169,123,47,0.15);
-  }
-  input::placeholder{ color: #B5AB95; }
-
-  /* ---------- Keystone (shared fields) ---------- */
-  .keystone{
-    background: var(--deep);
-    color: #F3EEE1;
-    border-radius: 14px;
-    margin-top: 14px;
-    padding: 26px 26px;
-    position: relative;
-    box-shadow: 0 14px 30px var(--shadow);
-  }
-  .keystone::before{
-    content:"";
-    position:absolute;
-    top:-10px; right:50%;
-    transform: translateX(50%) rotate(45deg);
-    width: 20px; height:20px;
-    background: var(--deep);
-  }
-  .keystone-grid{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-  @media (max-width: 620px){
-    .keystone-grid{ grid-template-columns: 1fr; }
-  }
-  .keystone label{ color: #E7E2D2; }
-  .keystone input{
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.22);
-    color: #F3EEE1;
-  }
-  .keystone input::placeholder{ color: rgba(243,238,225,0.5); }
-  .keystone input:focus{
-    border-color: var(--gold-light);
-    box-shadow: 0 0 0 3px rgba(201,162,92,0.25);
-  }
-
-  /* ---------- Submit ---------- */
-  .submit-row{
-    text-align:center;
-    margin-top: 30px;
-  }
-  button.submit{
-    background: var(--accent);
-    color: #FBF6EC;
-    border: none;
-    padding: 15px 46px;
-    border-radius: 999px;
-    font-family:'Cairo', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform .15s, box-shadow .15s, background .15s;
-    box-shadow: 0 8px 20px rgba(151,54,43,0.3);
-  }
-  button.submit:hover{ transform: translateY(-2px); background:#832E24; }
-  button.submit:active{ transform: translateY(0); }
-  button.submit:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
-
-  .error-msg{
-    color: var(--accent);
-    font-size: 14px;
-    text-align:center;
-    margin-top: 14px;
-    display:none;
-  }
-
-  /* ---------- Success state ---------- */
-  .success{
-    display:none;
-    text-align:center;
-    background: var(--card);
-    border: 1px solid var(--stone-line);
-    border-radius: 18px;
-    padding: 50px 30px;
-    box-shadow: 0 10px 30px var(--shadow);
-  }
-  .success .icon{
-    width:64px; height:64px;
-    margin: 0 auto 18px;
-    border-radius:50%;
-    background: var(--deep);
-    display:flex; align-items:center; justify-content:center;
-  }
-  .success h3{
-    font-family:'Aref Ruqaa', serif;
-    font-size: 26px;
-    margin: 0 0 10px;
-    color: var(--ink);
-  }
-  .success p{
-    color: var(--ink-soft);
-    font-size: 15px;
-    margin: 0;
-  }
-
-  .footer-note{
-    text-align:center;
-    font-size: 13px;
-    color: var(--stone);
-    margin-top: 30px;
-  }
-</style>
-</head>
-<body>
-
-<div class="header">
-  <div class="eyebrow">الكنيسة الرسولية — أمبابة</div>
-  <h1>صخرة العهد</h1>
-  <p class="sub">كورس لبناء العلاقة الزوجية على أساس ثابت لا يتزحزح</p>
-  <div class="divider"><span></span><div class="line"></div><span></span><div class="line"></div><span></span></div>
-</div>
-
-<div class="wrap">
-
-  <div class="info-strip">
-    <div class="chip">⏳ <b>مدة الكورس:</b>&nbsp;3 شهور</div>
-    <div class="chip">📅 <b>بداية الكورس:</b>&nbsp;الخميس 17 سبتمبر</div>
-    <div class="chip">📍 <b>المكان:</b>&nbsp;قاعة الدور الأول</div>
-  </div>
-
-  <div class="intro">
-    <p>
-      <strong>الزواج عهدٌ قبل أن يكون علاقة</strong>، وكل عهدٍ يحتاج إلى أساسٍ صلب يُبنى عليه ويثبت أمام تغيّرات الأيام والسنين.
-      كثيرٌ من التحديات التي تمر بها الحياة الزوجية لا تنبع من نقصٍ في المحبة، بل من غيابِ أدواتٍ عمليةٍ للفهم والتواصل والنمو معًا.
-    </p>
-    <p>
-      "صخرة العهد" ليس مجرد كورس، بل رحلة مشتركة لكل زوجين — سواء كانوا في بداية طريقهما أو بعد سنواتٍ طويلةٍ من الزواج —
-      لإعادة اكتشاف بعضهما البعض، وترسيخ العلاقة على أساسٍ يشبه الصخرة: ثابت، آمن، ولا يتزعزع.
-    </p>
-    <p>
-      نرحّب بكل زوجين راغبين في الاستثمار في علاقتهما، والانضمام إلى هذه الرحلة معنا.
-    </p>
-  </div>
-
-  <div class="section-title">
-    <h2>استمارة التسجيل</h2>
-    <p>من فضلك سجّل بياناتكما معًا للانضمام إلى الكورس</p>
-  </div>
-
-  <form id="regForm">
-    <div class="tablets">
-      <div class="tablet">
-        <span class="tag">الزوج</span>
-        <div class="field">
-          <label for="husbandName">اسم الزوج</label>
-          <input type="text" id="husbandName" placeholder="الاسم بالكامل" required>
-        </div>
-        <div class="field">
-          <label for="husbandPhone">رقم تليفون الزوج</label>
-          <input type="tel" id="husbandPhone" placeholder="01xxxxxxxxx" required>
-        </div>
-      </div>
-
-      <div class="tablet">
-        <span class="tag">الزوجة</span>
-        <div class="field">
-          <label for="wifeName">اسم الزوجة</label>
-          <input type="text" id="wifeName" placeholder="الاسم بالكامل" required>
-        </div>
-        <div class="field">
-          <label for="wifePhone">رقم تليفون الزوجة</label>
-          <input type="tel" id="wifePhone" placeholder="01xxxxxxxxx" required>
-        </div>
-      </div>
-    </div>
-
-    <div class="keystone">
-      <div class="keystone-grid">
-        <div class="field">
-          <label for="yearsMarried">عدد سنين الزواج</label>
-          <input type="number" id="yearsMarried" min="0" placeholder="مثال: 5" required>
-        </div>
-        <div class="field">
-          <label for="childrenCount">عدد الأطفال</label>
-          <input type="number" id="childrenCount" min="0" placeholder="مثال: 2" required>
-        </div>
-      </div>
-    </div>
-
-    <div class="submit-row">
-      <button type="submit" class="submit" id="submitBtn">تأكيد التسجيل في الكورس</button>
-      <div class="error-msg" id="errorMsg">حدث خطأ أثناء الحفظ، من فضلك حاول مرة أخرى.</div>
-    </div>
-  </form>
-
-  <div class="success" id="successBox">
-    <div class="icon">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5 13l4 4L19 7" stroke="#F3EEE1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <h3>تم تسجيلكما بنجاح</h3>
-    <p>نتشرف بانضمامكما إلى "صخرة العهد" — في انتظاركما بقاعة الدور الأول بالكنيسة الرسولية بأمبابة.</p>
-  </div>
-
-  <div class="footer-note">الكنيسة الرسولية بإمبابة · صخرة العهد</div>
-
-</div>
-
 <script>
-    const form = document.getElementById('regForm');
+  const form = document.getElementById('regForm');
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
@@ -446,20 +20,20 @@
       wifePhone: document.getElementById('wifePhone').value.trim(),
       yearsMarried: document.getElementById('yearsMarried').value,
       childrenCount: document.getElementById('childrenCount').value,
-    submittedAt: new Date().toLocaleString('ar-EG', {
-  timeZone: 'Africa/Cairo'
-})
+
+      submittedAt: new Date().toLocaleString('ar-EG', {
+        timeZone: 'Africa/Cairo'
+      })
+    };
 
     try{
 
-      // التحقق من التكرار
       const checkResponse = await fetch(
         "https://sheetdb.io/api/v1/wnb9qfuidlpbg/search?husbandPhone=" + entry.husbandPhone
       );
 
       const existingData = await checkResponse.json();
 
-      // لو الرقم موجود بالفعل
       if(existingData.length > 0){
 
         alert("تم التسجيل مسبقًا بهذا الرقم");
@@ -470,27 +44,26 @@
         return;
       }
 
-      // حفظ البيانات
-      const response = await fetch("https://sheetdb.io/api/v1/wnb9qfuidlpbg", {
+      const response = await fetch(
+        "https://sheetdb.io/api/v1/wnb9qfuidlpbg",
+        {
+          method: "POST",
 
-        method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
 
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          data: entry
-        })
-
-      });
+          body: JSON.stringify({
+            data: entry
+          })
+        }
+      );
 
       if(!response.ok){
         throw new Error('save failed');
       }
 
       form.style.display = 'none';
-
       successBox.style.display = 'block';
 
     }catch(err){
@@ -506,6 +79,3 @@
 
   });
 </script>
-
-</body>
-</html>
