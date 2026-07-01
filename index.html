@@ -484,20 +484,28 @@
       yearsMarried: document.getElementById('yearsMarried').value,
       childrenCount: document.getElementById('childrenCount').value,
       churchName: document.getElementById('churchName').value.trim(),
-      submittedAt: new Date().toISOString()
+      submittedAt: new Date().toLocaleString('en-EG', {
+        timeZone: 'Africa/Cairo',
+        hour12: true
+      })
     };
 
-    const key = 'registration:' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
-
     try{
-      const result = await window.storage.set(key, JSON.stringify(entry), true);
-      if(!result){
+      const response = await fetch("https://sheetdb.io/api/v1/wnb9qfuidlpbg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ data: entry })
+      });
+
+      if(!response.ok){
         throw new Error('save failed');
       }
       form.style.display = 'none';
       successBox.style.display = 'block';
     }catch(err){
-      console.error('Storage error:', err);
+      console.error('SheetDB error:', err);
       errorMsg.style.display = 'block';
       submitBtn.disabled = false;
       submitBtn.textContent = 'تأكيد التسجيل في الكورس';
