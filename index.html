@@ -425,14 +425,17 @@
 </div>
 
 <script>
-  const form = document.getElementById('regForm');
+    const form = document.getElementById('regForm');
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
 
   form.addEventListener('submit', async function(e){
+
     e.preventDefault();
+
     errorMsg.style.display = 'none';
+
     submitBtn.disabled = true;
     submitBtn.textContent = 'جاري الحفظ...';
 
@@ -448,27 +451,58 @@
 
     try{
 
+      // التحقق من التكرار
+      const checkResponse = await fetch(
+        "https://sheetdb.io/api/v1/wnb9qfuidlpbg/search?husbandPhone=" + entry.husbandPhone
+      );
+
+      const existingData = await checkResponse.json();
+
+      // لو الرقم موجود بالفعل
+      if(existingData.length > 0){
+
+        alert("تم التسجيل مسبقًا بهذا الرقم");
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'تأكيد التسجيل في الكورس';
+
+        return;
+      }
+
+      // حفظ البيانات
       const response = await fetch("https://sheetdb.io/api/v1/wnb9qfuidlpbg", {
+
         method: "POST",
+
         headers: {
           "Content-Type": "application/json"
         },
+
         body: JSON.stringify({
           data: entry
         })
+
       });
 
       if(!response.ok){
         throw new Error('save failed');
       }
+
       form.style.display = 'none';
+
       successBox.style.display = 'block';
+
     }catch(err){
+
       console.error('Storage error:', err);
+
       errorMsg.style.display = 'block';
+
       submitBtn.disabled = false;
+
       submitBtn.textContent = 'تأكيد التسجيل في الكورس';
     }
+
   });
 </script>
 
