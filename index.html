@@ -443,7 +443,10 @@
       wifePhone: document.getElementById('wifePhone').value.trim(),
       yearsMarried: document.getElementById('yearsMarried').value,
       childrenCount: document.getElementById('childrenCount').value,
-      submittedAt: new Date().toISOString()
+      submittedAt: new Date().toLocaleString('ar-EG', {
+  timeZone: 'Africa/Cairo',
+  hour12: true
+})
     };
 
     try{
