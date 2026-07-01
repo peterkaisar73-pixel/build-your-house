@@ -255,6 +255,52 @@
   }
   input::placeholder{ color: #B5AB95; }
 
+  /* ---------- Status toggle ---------- */
+  .status-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 6px 0 22px;
+  }
+  .status-label{
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .status-toggle{
+    display:flex;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--stone-line);
+    border-radius: 999px;
+    padding: 4px;
+  }
+  .status-option{
+    position: relative;
+    cursor: pointer;
+  }
+  .status-option input{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .status-option span{
+    display:block;
+    padding: 8px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    transition: background .15s, color .15s;
+  }
+  .status-option input:checked + span{
+    background: var(--deep);
+    color: #F3EEE1;
+  }
+
   /* ---------- Keystone (shared fields) ---------- */
   .keystone{
     background: var(--deep);
@@ -427,15 +473,29 @@
       </div>
     </div>
 
+    <div class="status-row">
+      <label class="status-label">الحالة</label>
+      <div class="status-toggle">
+        <label class="status-option">
+          <input type="radio" name="status" value="متزوجين" checked>
+          <span>متزوجين</span>
+        </label>
+        <label class="status-option">
+          <input type="radio" name="status" value="مخطوبين">
+          <span>مخطوبين</span>
+        </label>
+      </div>
+    </div>
+
     <div class="keystone">
-      <div class="keystone-grid">
+      <div class="keystone-grid" id="marriedFieldsRow">
         <div class="field">
           <label for="yearsMarried">عدد سنين الزواج</label>
-          <input type="number" id="yearsMarried" min="0" placeholder="مثال: 5" required>
+          <input type="number" id="yearsMarried" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="مثال: 5" required>
         </div>
         <div class="field">
           <label for="childrenCount">عدد الأطفال</label>
-          <input type="number" id="childrenCount" min="0" placeholder="مثال: 2" required>
+          <input type="number" id="childrenCount" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="مثال: 2" required>
         </div>
       </div>
       <div class="field" style="margin-top:18px;">
@@ -476,12 +536,48 @@
 </div>
 
 <script>
+  // إخفاء/إظهار خانات "عدد سنين الزواج" و"عدد الأطفال" حسب الحالة (متزوجين/مخطوبين)
+  const marriedFieldsRow = document.getElementById('marriedFieldsRow');
+  const yearsMarriedInput = document.getElementById('yearsMarried');
+  const childrenCountInput = document.getElementById('childrenCount');
+  const statusRadios = document.querySelectorAll('input[name="status"]');
+
+  function updateStatusFields(){
+    const status = document.querySelector('input[name="status"]:checked').value;
+    if(status === 'مخطوبين'){
+      marriedFieldsRow.style.display = 'none';
+      yearsMarriedInput.required = false;
+      childrenCountInput.required = false;
+    }else{
+      marriedFieldsRow.style.display = '';
+      yearsMarriedInput.required = true;
+      childrenCountInput.required = true;
+    }
+  }
+  statusRadios.forEach(function(radio){
+    radio.addEventListener('change', updateStatusFields);
+  });
+  updateStatusFields();
+
   const form = document.getElementById('regForm');
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
   const duplicateBox = document.getElementById('duplicateBox');
   const SHEETDB_URL = "https://sheetdb.io/api/v1/wnb9qfuidlpbg";
+
+  // يسمح بأرقام صحيحة موجبة بس (بيمنع -, +, e, . اللي متاحين افتراضيًا في type="number")
+  ['yearsMarried', 'childrenCount'].forEach(function(id){
+    const input = document.getElementById(id);
+    input.addEventListener('input', function(){
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    input.addEventListener('keydown', function(e){
+      if(['-', '+', 'e', 'E', '.', ','].includes(e.key)){
+        e.preventDefault();
+      }
+    });
+  });
 
   async function isAlreadyRegistered(husbandPhone, wifePhone){
     // جوجل شيتس بيخزّن الأرقام كأرقام (numbers) وبيشيل الصفر من الأول،
@@ -506,13 +602,16 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'جاري التحقق...';
 
+    const status = document.querySelector('input[name="status"]:checked').value;
+
     const entry = {
+      status: status,
       husbandName: document.getElementById('husbandName').value.trim(),
       husbandPhone: document.getElementById('husbandPhone').value.trim(),
       wifeName: document.getElementById('wifeName').value.trim(),
       wifePhone: document.getElementById('wifePhone').value.trim(),
-      yearsMarried: document.getElementById('yearsMarried').value,
-      childrenCount: document.getElementById('childrenCount').value,
+      yearsMarried: status === 'مخطوبين' ? '' : document.getElementById('yearsMarried').value,
+      childrenCount: status === 'مخطوبين' ? '' : document.getElementById('childrenCount').value,
       churchName: document.getElementById('churchName').value.trim(),
       submittedAt: new Date().toLocaleString('en-EG', {
         timeZone: 'Africa/Cairo',
