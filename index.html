@@ -458,6 +458,17 @@
     </div>
     <h3>تم تسجيلكما بنجاح</h3>
     <p>نتشرف بانضمامكما إلى "صخرة العهد" — في انتظاركما بقاعة الدور الأول بالكنيسة الرسولية بأمبابة.</p>
+    <p style="margin-top:10px;">سيتم التواصل معكما قريبًا لتأكيد الحجز.</p>
+  </div>
+
+  <div class="success" id="duplicateBox">
+    <div class="icon" style="background: var(--gold);">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 8v5M12 16h.01M12 3l9 16H3L12 3z" stroke="#F3EEE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3>البيانات مسجّلة بالفعل</h3>
+    <p>يبدو أن رقم التليفون المُدخل مسجّل بالفعل في "صخرة العهد". لو فيه أي استفسار، من فضلك تواصلوا معنا مباشرة.</p>
   </div>
 
   <div class="footer-note">كنيسة أمبابة الرسولية · صخرة العهد</div>
@@ -469,12 +480,25 @@
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
+  const duplicateBox = document.getElementById('duplicateBox');
+  const SHEETDB_URL = "https://sheetdb.io/api/v1/wnb9qfuidlpbg";
+
+  async function isAlreadyRegistered(husbandPhone, wifePhone){
+    const [r1, r2] = await Promise.all([
+      fetch(`${SHEETDB_URL}/search?husbandPhone=${encodeURIComponent(husbandPhone)}`),
+      fetch(`${SHEETDB_URL}/search?wifePhone=${encodeURIComponent(wifePhone)}`)
+    ]);
+    const [d1, d2] = await Promise.all([r1.json(), r2.json()]);
+    const found1 = Array.isArray(d1) && d1.length > 0;
+    const found2 = Array.isArray(d2) && d2.length > 0;
+    return found1 || found2;
+  }
 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     errorMsg.style.display = 'none';
     submitBtn.disabled = true;
-    submitBtn.textContent = 'جاري الحفظ...';
+    submitBtn.textContent = 'جاري التحقق...';
 
     const entry = {
       husbandName: document.getElementById('husbandName').value.trim(),
@@ -491,7 +515,21 @@
     };
 
     try{
-      const response = await fetch("https://sheetdb.io/api/v1/wnb9qfuidlpbg", {
+      const alreadyRegistered = await isAlreadyRegistered(entry.husbandPhone, entry.wifePhone);
+      if(alreadyRegistered){
+        form.style.display = 'none';
+        duplicateBox.style.display = 'block';
+        return;
+      }
+    }catch(err){
+      console.error('Duplicate check error:', err);
+      // لو فشل التحقق نفسه (مشكلة شبكة)، نكمل التسجيل عادي بدل ما نمنع المستخدم
+    }
+
+    submitBtn.textContent = 'جاري الحفظ...';
+
+    try{
+      const response = await fetch(SHEETDB_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
