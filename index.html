@@ -484,9 +484,15 @@
   const SHEETDB_URL = "https://sheetdb.io/api/v1/wnb9qfuidlpbg";
 
   async function isAlreadyRegistered(husbandPhone, wifePhone){
+    // جوجل شيتس بيخزّن الأرقام كأرقام (numbers) وبيشيل الصفر من الأول،
+    // فلازم نطابق نفس الصيغة دي قبل ما نبحث
+    const normalize = (phone) => phone.replace(/\D/g, '').replace(/^0+/, '');
+    const husbandPhoneNormalized = normalize(husbandPhone);
+    const wifePhoneNormalized = normalize(wifePhone);
+
     const [r1, r2] = await Promise.all([
-      fetch(`${SHEETDB_URL}/search?husbandPhone=${encodeURIComponent(husbandPhone)}`),
-      fetch(`${SHEETDB_URL}/search?wifePhone=${encodeURIComponent(wifePhone)}`)
+      fetch(`${SHEETDB_URL}/search?husbandPhone=${encodeURIComponent(husbandPhoneNormalized)}`),
+      fetch(`${SHEETDB_URL}/search?wifePhone=${encodeURIComponent(wifePhoneNormalized)}`)
     ]);
     const [d1, d2] = await Promise.all([r1.json(), r2.json()]);
     const found1 = Array.isArray(d1) && d1.length > 0;
