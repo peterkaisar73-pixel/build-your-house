@@ -143,6 +143,27 @@
   }
   .chip b{ color: var(--ink); font-weight:600; }
 
+  /* ---------- Verse ---------- */
+  .verse{
+    text-align: center;
+    padding: 6px 20px 34px;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .verse p{
+    font-family: 'Aref Ruqaa', serif;
+    font-size: clamp(22px, 3.6vw, 28px);
+    color: var(--deep);
+    margin: 0 0 10px;
+    line-height: 1.7;
+  }
+  .verse-ref{
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
   /* ---------- Intro tablet ---------- */
   .intro{
     background: var(--card);
@@ -442,10 +463,9 @@
 
 <div class="wrap">
 
-  <div class="info-strip">
-    <div class="chip">⏳ <b>مدة الكورس:</b>&nbsp;3 شهور</div>
-    <div class="chip">🗓️ <b>بداية الكورس:</b>&nbsp;17 سبتمبر</div>
-    <div class="chip">📍 <b>المكان:</b>&nbsp;قاعة الدور الأول</div>
+  <div class="verse">
+    <p>"وَأُعْطِيهِمْ قَلْبًا وَاحِدًا وَطَرِيقًا وَاحِدًا لِيَخَافُونِي كُلَّ الأَيَّامِ،<br>لِخَيْرِهِمْ وَخَيْرِ أَوْلاَدِهِمْ مِنْ بَعْدِهِمْ"</p>
+    <span class="verse-ref">(إرميا 32: 39)</span>
   </div>
 
   <div class="intro">
@@ -460,6 +480,12 @@
     <p>
       نرحّب بكل زوجين راغبين في الاستثمار في علاقتهما، والانضمام إلى هذه الرحلة معنا.
     </p>
+  </div>
+
+  <div class="info-strip">
+    <div class="chip">⏳ <b>مدة الكورس:</b>&nbsp;3 شهور</div>
+    <div class="chip">🗓️ <b>بداية الكورس:</b>&nbsp;17 سبتمبر</div>
+    <div class="chip">📍 <b>المكان:</b>&nbsp;قاعة الدور الأول</div>
   </div>
 
   <div class="section-title">
