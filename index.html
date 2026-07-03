@@ -51,26 +51,28 @@
 
   .header .logo{
     width: 120px;
-    height: 156px;
+    height: 120px;
     margin: 0 auto 20px;
-    border-radius: 22px;
-    background: transparent;
+    border-radius: 50%;
+    background: var(--bg-deep);
     display:flex;
     align-items:center;
     justify-content:center;
     overflow: hidden;
     box-shadow: 0 8px 20px var(--shadow);
+    border: 3px solid var(--gold);
   }
   .header .logo img{
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     object-fit: contain;
   }
   .header .logo .placeholder{
-    font-size: 11px;
-    color: var(--stone);
+    font-size: 14px;
+    color: var(--ink-soft);
     text-align: center;
     line-height: 1.4;
+    font-weight: 700;
   }
 
   .header .program{
@@ -412,11 +414,17 @@
     text-align: center;
     box-shadow: 0 4px 12px var(--shadow);
   }
+  .price-notice .price-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+  }
   .price-notice .price {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--accent);
     font-family: 'Aref Ruqaa', serif;
+    margin-right: 6px;
   }
   .price-notice .price small {
     font-size: 16px;
@@ -534,7 +542,8 @@
 
 <div class="header">
   <div class="logo">
-    <img src="data:image/jpeg;base64,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" alt="لوجو برنامج ابني بيتك - الكنيسة الرسولية بأمبابة">
+    <!-- هات الصورة بتاعتك وارفعها على GitHub أو استخدم رابط مباشر -->
+    <img src="https://via.placeholder.com/120x120/F3EEE1/A97B2F?text=🪨" alt="صخرة العهد - الكنيسة الرسولية بأمبابة">
   </div>
   <div class="eyebrow">الكنيسة الرسولية — أمبابة</div>
   <div class="program">برنامج ابني بيتك</div>
@@ -573,6 +582,7 @@
   <!-- ===== PRICE NOTICE ===== -->
   <div class="price-notice">
     <div>
+      <span class="price-label">ثمن الكورس:</span>
       <span class="price">300 ج.م</span>
       <small>شاملة:</small>
     </div>
@@ -674,7 +684,7 @@
     <h3>تم تسجيلكما بنجاح</h3>
     <p>نتشرف بانضمامكما إلى "صخرة العهد" — في انتظاركما بقاعة الدور الأول بالكنيسة الرسولية بأمبابة.</p>
     <p style="margin-top:10px;">سيتم التواصل معكما قريبًا لتأكيد الحجز.</p>
-    <p style="margin-top:12px; font-size:14px; color:var(--gold);">💰 رسوم الكورس: 300 ج.م (شاملة المطبوعات والكوفي بريك والبيبي سيتر) · يمكن التقسيط</p>
+    <p style="margin-top:12px; font-size:14px; color:var(--gold);">💰 ثمن الكورس: 300 ج.م (شاملة المطبوعات والكوفي بريك والبيبي سيتر) · يمكن التقسيط</p>
   </div>
 
   <div class="success" id="duplicateBox" style="display:none;">
