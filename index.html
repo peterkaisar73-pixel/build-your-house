@@ -752,30 +752,11 @@
 
 </div>
 
-<!-- قمنا بتعديل الوسم ليدعم الاستيراد المباشر والمقروء لـ Firebase -->
-<script type="module">
-  // 1. استدعاء مكتبات فيربيز مباشرة من الإنترنت لتفادي تحميل حزم برمجية معقدة
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  // 2. كود التهيئة الخاص بمشروعك "build-your-house-53c2e"
-  const firebaseConfig = {
-    apiKey: "AIzaSyCjxCLnlkWZOL6HPcPRTC9YC2BD399emqQ",
-    authDomain: "build-your-house-53c2e.firebaseapp.com",
-    databaseURL: "https://build-your-house-53c2e-default-rtdb.firebaseio.com",
-    projectId: "build-your-house-53c2e",
-    storageBucket: "build-your-house-53c2e.firebasestorage.app",
-    messagingSenderId: "487446549688",
-    appId: "1:487446549688:web:bbe4d6f33e72299665904d",
-    measurementId: "G-VNCQQGN9R6"
-  };
-
-  // 3. تهيئة التطبيق وقاعدة البيانات في المتصفح
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
+<script>
   // ------------------------------------------------
   // 1. CHILDREN DYNAMIC FIELDS
+  // (معرّفة أولًا عشان تُستخدم داخل منطق الـ reset الخاص بالحالة الاجتماعية)
   // ------------------------------------------------
   const childrenSection = document.getElementById('childrenSection');
   const childrenContainer = document.getElementById('childrenContainer');
@@ -815,18 +796,21 @@
   const yearsMarriedInput = document.getElementById('yearsMarried');
   const statusRadios = document.querySelectorAll('input[name="status"]');
 
+  // نحتفظ بآخر حالة معروفة عشان نعرف هل حصل تغيير فعلي يستوجب تصفير البيانات
   let previousStatus = document.querySelector('input[name="status"]:checked').value;
 
+  // يمسح كل البيانات والحقول المرتبطة بحالة "متزوجين" بشكل كامل من الـ DOM
   function resetMarriedRelatedData(){
     yearsMarriedInput.value = '';
     childrenCountInput.value = '';
-    childrenContainer.innerHTML = '';       
+    childrenContainer.innerHTML = '';       // حذف حقول الأطفال نهائيًا من الصفحة
     childrenSection.classList.remove('visible');
   }
 
   function updateStatusFields(){
     const status = document.querySelector('input[name="status"]:checked').value;
 
+    // لو الحالة اتغيرت فعلاً عن اللي كانت قبل كده، امسح كل بيانات الحالة القديمة
     if(status !== previousStatus){
       resetMarriedRelatedData();
       previousStatus = status;
@@ -848,6 +832,7 @@
     radio.addEventListener('change', updateStatusFields);
   });
 
+  // تهيئة أولية عند تحميل الصفحة
   updateStatusFields();
   updateChildrenFields();
 
@@ -871,38 +856,39 @@
   });
 
   // ------------------------------------------------
-  // 4. FORM SUBMISSION (تحديث مستودع التخزين لـ Firebase)
+  // 4. FORM SUBMISSION
   // ------------------------------------------------
   const form = document.getElementById('regForm');
   const submitBtn = document.getElementById('submitBtn');
   const errorMsg = document.getElementById('errorMsg');
   const successBox = document.getElementById('successBox');
   const duplicateBox = document.getElementById('duplicateBox');
+  const SHEETDB_URL = "https://sheetdb.io/api/v1/wnb9qfuidlpbg";
 
   function normalizePhone(phone) {
     return phone.replace(/\D/g, '').replace(/^0+/, '');
   }
 
-  // دالة التحقق من التكرار عبر استعلام من Firebase مباشرة
   async function isAlreadyRegistered(husbandPhone, wifePhone) {
     const husbandPhoneNormalized = normalizePhone(husbandPhone);
     const wifePhoneNormalized = normalizePhone(wifePhone);
 
     try {
-      const qHusband = query(collection(db, "registrations"), where("husbandPhoneNormalized", "==", husbandPhoneNormalized));
-      const qWife = query(collection(db, "registrations"), where("wifePhoneNormalized", "==", wifePhoneNormalized));
-      
-      const [snapHusband, snapWife] = await Promise.all([
-        getDocs(qHusband),
-        getDocs(qWife)
+      const [r1, r2] = await Promise.all([
+        fetch(`${SHEETDB_URL}/search?husbandPhone=${encodeURIComponent(husbandPhoneNormalized)}`),
+        fetch(`${SHEETDB_URL}/search?wifePhone=${encodeURIComponent(wifePhoneNormalized)}`)
       ]);
-      return !snapHusband.empty || !snapWife.empty;
+      const [d1, d2] = await Promise.all([r1.json(), r2.json()]);
+      const found1 = Array.isArray(d1) && d1.length > 0;
+      const found2 = Array.isArray(d2) && d2.length > 0;
+      return found1 || found2;
     } catch (e) {
-      console.error("خطأ أثناء الاستعلام من فيربيز:", e);
       return false;
     }
   }
 
+  // أقصى عدد أعمدة أطفال هنجهزها في كل صف (لازم تتطابق مع أعمدة الشيت في جوجل شيتس)
+  // لو محتاج أكتر من كده، زوّد الرقم هنا وضيف نفس عدد الأعمدة في الشيت (child6Name, child6Age...)
   const MAX_CHILDREN_COLUMNS = 8;
 
   function getChildrenColumns() {
@@ -918,6 +904,7 @@
     return columns;
   }
 
+  // نفس الأعمدة لكن كلها فاضية - تُستخدم لحالة "مخطوبين" اللي مالهاش أطفال أصلاً
   function getEmptyChildrenColumns() {
     const columns = {};
     for (let i = 1; i <= MAX_CHILDREN_COLUMNS; i++) {
@@ -936,6 +923,8 @@
 
     const status = document.querySelector('input[name="status"]:checked').value;
 
+    // أعمدة الأطفال منفصلة (child1Name, child1Age, child2Name, child2Age, ...)
+    // في حالة "مخطوبين" كل الأعمدة بتتبعت فاضية عشان الصف يفضل نظيف
     const childrenColumns = status === 'مخطوبين'
       ? getEmptyChildrenColumns()
       : getChildrenColumns();
@@ -944,11 +933,9 @@
       status: status,
       husbandName: document.getElementById('husbandName').value.trim(),
       husbandPhone: document.getElementById('husbandPhone').value.trim(),
-      husbandPhoneNormalized: normalizePhone(document.getElementById('husbandPhone').value.trim()),
       husbandBirth: document.getElementById('husbandBirth').value,
       wifeName: document.getElementById('wifeName').value.trim(),
       wifePhone: document.getElementById('wifePhone').value.trim(),
-      wifePhoneNormalized: normalizePhone(document.getElementById('wifePhone').value.trim()),
       wifeBirth: document.getElementById('wifeBirth').value,
       yearsMarried: status === 'مخطوبين' ? '' : document.getElementById('yearsMarried').value,
       childrenCount: status === 'مخطوبين' ? '' : document.getElementById('childrenCount').value,
@@ -969,15 +956,24 @@
       return;
     }
 
-    submitBtn.textContent = 'جاري الحفظ في فيربيز...';
+    submitBtn.textContent = 'جاري الحفظ...';
 
-    // حفظ البيانات في Firestore مباشرة بدلاً من SheetDB القديم
     try{
-      await addDoc(collection(db, "registrations"), entry);
+      const response = await fetch(SHEETDB_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ data: entry })
+      });
+
+      if(!response.ok){
+        throw new Error('save failed');
+      }
       form.style.display = 'none';
       successBox.style.display = 'block';
     }catch(err){
-      console.error('Firebase save error:', err);
+      console.error('SheetDB error:', err);
       errorMsg.style.display = 'block';
       submitBtn.disabled = false;
       submitBtn.textContent = 'تأكيد التسجيل في الكورس';
