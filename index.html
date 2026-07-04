@@ -864,6 +864,22 @@
   const successBox = document.getElementById('successBox');
   const duplicateBox = document.getElementById('duplicateBox');
   const SHEETDB_URL = "https://sheetdb.io/api/v1/wnb9qfuidlpbg";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmSExSHG9J_7CXpJ0FwpJjG5fj04J0QY2jTAlavL5SeZwzFE_yI-VO7HIxrbCwJTSV/exec";
+
+  // إرسال إشعار إيميل فوري عند نجاح التسجيل (مستقل تمامًا عن SheetDB وإشعارات الشيت)
+  // بنستخدم body نصي (مش application/json) عشان نتفادى CORS preflight اللي Apps Script مبيدعمهوش
+  function notifyByEmail(entry){
+    try{
+      fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(entry)
+      }).catch(function(err){
+        console.error('Email notification error:', err);
+      });
+    }catch(err){
+      console.error('Email notification error:', err);
+    }
+  }
 
   function normalizePhone(phone) {
     return phone.replace(/\D/g, '').replace(/^0+/, '');
@@ -970,6 +986,10 @@
       if(!response.ok){
         throw new Error('save failed');
       }
+
+      // إرسال إيميل فوري بمجرد نجاح الحفظ - Fire and forget (مش هيأخر ظهور رسالة النجاح للمستخدم)
+      notifyByEmail(entry);
+
       form.style.display = 'none';
       successBox.style.display = 'block';
     }catch(err){
