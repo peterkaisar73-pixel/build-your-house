@@ -6,6 +6,25 @@
 <title>صخرة العهد</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  .pk-watermark{
+  position: fixed;
+  bottom: 16px;
+  left: 16px; /* أو right: 16px لو عايزه في الشمال بصفحة RTL */
+  width: 44px;
+  height: 44px;
+  opacity: 0.55;
+  z-index: 999;
+  transition: opacity .2s, transform .2s;
+}
+.pk-watermark:hover{
+  opacity: 1;
+  transform: scale(1.08);
+}
+.pk-watermark img{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 <style>
   :root{
     --bg: #F3EEE1;
@@ -980,6 +999,9 @@
     }
   });
 </script>
-
+<a href="#" class="pk-watermark" title="Peter Kaisar">
+  <img src="pk_logo.png" alt="PK">
+</a>
+  
 </body>
 </html>
