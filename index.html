@@ -755,35 +755,12 @@
 
 <script>
   // ------------------------------------------------
-  // 1. STATUS TOGGLE
-  // ------------------------------------------------
-  const marriedFieldsContainer = document.getElementById('marriedFieldsContainer');
-  const yearsMarriedInput = document.getElementById('yearsMarried');
-  const childrenCountInput = document.getElementById('childrenCount');
-  const statusRadios = document.querySelectorAll('input[name="status"]');
-
-  function updateStatusFields(){
-    const status = document.querySelector('input[name="status"]:checked').value;
-    if(status === 'مخطوبين'){
-      marriedFieldsContainer.style.display = 'none';
-      yearsMarriedInput.required = false;
-      childrenCountInput.required = false;
-    }else{
-      marriedFieldsContainer.style.display = '';
-      yearsMarriedInput.required = true;
-      childrenCountInput.required = true;
-    }
-  }
-  statusRadios.forEach(function(radio){
-    radio.addEventListener('change', updateStatusFields);
-  });
-  updateStatusFields();
-
-  // ------------------------------------------------
-  // 2. CHILDREN DYNAMIC FIELDS
+  // 1. CHILDREN DYNAMIC FIELDS
+  // (معرّفة أولًا عشان تُستخدم داخل منطق الـ reset الخاص بالحالة الاجتماعية)
   // ------------------------------------------------
   const childrenSection = document.getElementById('childrenSection');
   const childrenContainer = document.getElementById('childrenContainer');
+  const childrenCountInput = document.getElementById('childrenCount');
 
   function updateChildrenFields() {
     const count = parseInt(childrenCountInput.value) || 0;
@@ -811,6 +788,52 @@
   }
 
   childrenCountInput.addEventListener('input', updateChildrenFields);
+
+  // ------------------------------------------------
+  // 2. STATUS TOGGLE + RESET ديناميكي عند تغيير الحالة
+  // ------------------------------------------------
+  const marriedFieldsContainer = document.getElementById('marriedFieldsContainer');
+  const yearsMarriedInput = document.getElementById('yearsMarried');
+  const statusRadios = document.querySelectorAll('input[name="status"]');
+
+  // نحتفظ بآخر حالة معروفة عشان نعرف هل حصل تغيير فعلي يستوجب تصفير البيانات
+  let previousStatus = document.querySelector('input[name="status"]:checked').value;
+
+  // يمسح كل البيانات والحقول المرتبطة بحالة "متزوجين" بشكل كامل من الـ DOM
+  function resetMarriedRelatedData(){
+    yearsMarriedInput.value = '';
+    childrenCountInput.value = '';
+    childrenContainer.innerHTML = '';       // حذف حقول الأطفال نهائيًا من الصفحة
+    childrenSection.classList.remove('visible');
+  }
+
+  function updateStatusFields(){
+    const status = document.querySelector('input[name="status"]:checked').value;
+
+    // لو الحالة اتغيرت فعلاً عن اللي كانت قبل كده، امسح كل بيانات الحالة القديمة
+    if(status !== previousStatus){
+      resetMarriedRelatedData();
+      previousStatus = status;
+    }
+
+    if(status === 'مخطوبين'){
+      marriedFieldsContainer.style.display = 'none';
+      childrenSection.classList.remove('visible');
+      yearsMarriedInput.required = false;
+      childrenCountInput.required = false;
+    }else{
+      marriedFieldsContainer.style.display = '';
+      yearsMarriedInput.required = true;
+      childrenCountInput.required = true;
+    }
+  }
+
+  statusRadios.forEach(function(radio){
+    radio.addEventListener('change', updateStatusFields);
+  });
+
+  // تهيئة أولية عند تحميل الصفحة
+  updateStatusFields();
   updateChildrenFields();
 
   // ------------------------------------------------
@@ -897,7 +920,7 @@
       wifeBirth: document.getElementById('wifeBirth').value,
       yearsMarried: status === 'مخطوبين' ? '' : document.getElementById('yearsMarried').value,
       childrenCount: status === 'مخطوبين' ? '' : document.getElementById('childrenCount').value,
-      childrenData: JSON.stringify(children),
+      childrenData: status === 'مخطوبين' ? '[]' : JSON.stringify(children),
       churchName: document.getElementById('churchName').value.trim(),
       submittedAt: new Date().toLocaleString('en-EG', {
         timeZone: 'Africa/Cairo',
