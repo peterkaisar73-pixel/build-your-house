@@ -1,0 +1,33 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C9A25C"/>
+      <stop offset="100%" stop-color="#A97B2F"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2E3A36"/>
+      <stop offset="100%" stop-color="#1D2624"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer ring -->
+  <circle cx="200" cy="200" r="190" fill="none" stroke="url(#ringGrad)" stroke-width="4"/>
+  <circle cx="200" cy="200" r="178" fill="none" stroke="url(#ringGrad)" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="170" fill="url(#bgGrad)"/>
+
+  <!-- Small decorative dots -->
+  <circle cx="200" cy="26" r="4" fill="#C9A25C"/>
+  <circle cx="200" cy="374" r="4" fill="#C9A25C"/>
+
+  <!-- Monogram -->
+  <text x="152" y="245" font-family="Georgia, 'Times New Roman', serif" font-size="150" font-weight="700" fill="#F3EEE1" text-anchor="middle">P</text>
+  <text x="248" y="245" font-family="Georgia, 'Times New Roman', serif" font-size="150" font-weight="700" fill="#C9A25C" text-anchor="middle">K</text>
+
+  <!-- thin divider line between letters -->
+  <line x1="200" y1="140" x2="200" y2="260" stroke="#C9A25C" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- bottom small name -->
+  <text x="200" y="300" font-family="Georgia, serif" font-size="18" letter-spacing="4" fill="#C9A25C" text-anchor="middle">PETER KAISAR</text>
+</svg>
