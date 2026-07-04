@@ -887,17 +887,31 @@
     }
   }
 
-  function getChildrenData() {
+  // أقصى عدد أعمدة أطفال هنجهزها في كل صف (لازم تتطابق مع أعمدة الشيت في جوجل شيتس)
+  // لو محتاج أكتر من كده، زوّد الرقم هنا وضيف نفس عدد الأعمدة في الشيت (child6Name, child6Age...)
+  const MAX_CHILDREN_COLUMNS = 8;
+
+  function getChildrenColumns() {
     const count = parseInt(childrenCountInput.value) || 0;
-    const children = [];
-    for (let i = 1; i <= count; i++) {
-      const name = document.getElementById(`childName_${i}`);
-      const age = document.getElementById(`childAge_${i}`);
-      if (name && age) {
-        children.push({ name: name.value.trim(), age: age.value.trim() });
-      }
+    const columns = {};
+    for (let i = 1; i <= MAX_CHILDREN_COLUMNS; i++) {
+      const nameInput = document.getElementById(`childName_${i}`);
+      const ageInput = document.getElementById(`childAge_${i}`);
+      const hasData = i <= count && nameInput && ageInput;
+      columns[`child${i}Name`] = hasData ? nameInput.value.trim() : '';
+      columns[`child${i}Age`] = hasData ? ageInput.value.trim() : '';
     }
-    return children;
+    return columns;
+  }
+
+  // نفس الأعمدة لكن كلها فاضية - تُستخدم لحالة "مخطوبين" اللي مالهاش أطفال أصلاً
+  function getEmptyChildrenColumns() {
+    const columns = {};
+    for (let i = 1; i <= MAX_CHILDREN_COLUMNS; i++) {
+      columns[`child${i}Name`] = '';
+      columns[`child${i}Age`] = '';
+    }
+    return columns;
   }
 
   form.addEventListener('submit', async function(e){
@@ -908,7 +922,12 @@
     submitBtn.textContent = 'جاري التحقق...';
 
     const status = document.querySelector('input[name="status"]:checked').value;
-    const children = getChildrenData();
+
+    // أعمدة الأطفال منفصلة (child1Name, child1Age, child2Name, child2Age, ...)
+    // في حالة "مخطوبين" كل الأعمدة بتتبعت فاضية عشان الصف يفضل نظيف
+    const childrenColumns = status === 'مخطوبين'
+      ? getEmptyChildrenColumns()
+      : getChildrenColumns();
 
     const entry = {
       status: status,
@@ -920,7 +939,7 @@
       wifeBirth: document.getElementById('wifeBirth').value,
       yearsMarried: status === 'مخطوبين' ? '' : document.getElementById('yearsMarried').value,
       childrenCount: status === 'مخطوبين' ? '' : document.getElementById('childrenCount').value,
-      childrenData: status === 'مخطوبين' ? '[]' : JSON.stringify(children),
+      ...childrenColumns,
       churchName: document.getElementById('churchName').value.trim(),
       submittedAt: new Date().toLocaleString('en-EG', {
         timeZone: 'Africa/Cairo',
