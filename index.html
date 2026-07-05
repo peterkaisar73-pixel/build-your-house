@@ -21,9 +21,9 @@
     --accent: #97362B;
     --shadow: rgba(58, 45, 20, 0.18);
   }
-
+ 
   *{ box-sizing: border-box; }
-
+ 
   html, body{
     margin:0;
     padding:0;
@@ -32,13 +32,13 @@
     font-family: 'Cairo', sans-serif;
     line-height: 1.75;
   }
-
+ 
   .wrap{
     max-width: 880px;
     margin: 0 auto;
     padding: 0 20px 60px;
   }
-
+ 
   /* ---------- Header ---------- */
   .header{
     position: relative;
@@ -48,7 +48,7 @@
     border-bottom: 1px solid var(--stone-line);
     margin-bottom: 34px;
   }
-
+ 
   .header .logo{
     width: 180px;
     height: 240px;
@@ -75,7 +75,7 @@
     text-align: center;
     line-height: 1.4;
   }
-
+ 
   .header .program{
     font-size: 15px;
     letter-spacing: 1px;
@@ -84,7 +84,7 @@
     margin-top: 4px;
     margin-bottom: 10px;
   }
-
+ 
   .header .eyebrow{
     font-size: 18px;
     letter-spacing: 0.5px;
@@ -92,7 +92,7 @@
     font-weight: 700;
     margin-bottom: 4px;
   }
-
+ 
   .header h1{
     font-family: 'Aref Ruqaa', serif;
     font-weight: 700;
@@ -101,14 +101,14 @@
     color: var(--ink);
     letter-spacing: 1px;
   }
-
+ 
   .header .sub{
     font-size: 17px;
     color: var(--ink-soft);
     max-width: 480px;
     margin: 0 auto;
   }
-
+ 
   .divider{
     display:flex;
     align-items:center;
@@ -124,7 +124,7 @@
   .divider .line{
     width:70px; height:1px; background: var(--stone-line);
   }
-
+ 
   /* ---------- Info strip ---------- */
   .info-strip{
     display:flex;
@@ -145,7 +145,7 @@
     gap:8px;
   }
   .chip b{ color: var(--ink); font-weight:600; }
-
+ 
   /* ---------- Verse ---------- */
   .verse{
     text-align: center;
@@ -166,7 +166,7 @@
     font-weight: 600;
     letter-spacing: 0.5px;
   }
-
+ 
   /* ---------- Intro tablet ---------- */
   .intro{
     background: var(--card);
@@ -193,7 +193,7 @@
   }
   .intro p:last-child{ margin-bottom:0; }
   .intro strong{ color: var(--ink); }
-
+ 
   /* ---------- Section title ---------- */
   .section-title{
     text-align:center;
@@ -210,10 +210,10 @@
     color: var(--stone);
     margin:0;
   }
-
+ 
   /* ---------- Twin tablets form ---------- */
   form{ margin: 0; }
-
+ 
   .tablets{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -221,11 +221,11 @@
     align-items: start;
     position: relative;
   }
-
+ 
   @media (max-width: 620px){
     .tablets{ grid-template-columns: 1fr; }
   }
-
+ 
   .tablet{
     background: var(--card);
     border: 1px solid var(--stone-line);
@@ -234,7 +234,7 @@
     box-shadow: 0 12px 26px var(--shadow);
     position: relative;
   }
-
+ 
   .tablet .tag{
     position:absolute;
     top: 14px; left: 50%;
@@ -247,12 +247,12 @@
     background: var(--card);
     padding: 2px 10px;
   }
-
+ 
   .field{
     margin-bottom: 18px;
   }
   .field:last-child{ margin-bottom: 0; }
-
+ 
   label{
     display:block;
     font-size: 14px;
@@ -260,7 +260,7 @@
     color: var(--ink);
     margin-bottom: 6px;
   }
-
+ 
   input{
     width:100%;
     padding: 12px 14px;
@@ -278,7 +278,7 @@
     box-shadow: 0 0 0 3px rgba(169,123,47,0.15);
   }
   input::placeholder{ color: #B5AB95; }
-
+ 
   /* ---------- Status toggle ---------- */
   .status-row{
     display:flex;
@@ -324,7 +324,7 @@
     background: var(--deep);
     color: #F3EEE1;
   }
-
+ 
   /* ---------- Keystone (shared fields) ---------- */
   .keystone{
     background: var(--deep);
@@ -362,7 +362,7 @@
     border-color: var(--gold-light);
     box-shadow: 0 0 0 3px rgba(201,162,92,0.25);
   }
-
+ 
   /* ---------- Children fields (dynamic) ---------- */
   .children-section {
     margin-top: 18px;
@@ -404,7 +404,7 @@
     border-color: var(--gold-light);
     box-shadow: 0 0 0 3px rgba(201,162,92,0.2);
   }
-
+ 
   /* ---------- Location Card ---------- */
   .location-card{
     background: var(--card);
@@ -485,7 +485,7 @@
     .location-card .pin{ margin: 0 auto; }
     .location-line{ justify-content: center; }
   }
-
+ 
   /* ---------- Price Notice (Premium) ---------- */
   .price-notice {
     background: var(--card);
@@ -567,7 +567,7 @@
   .price-note strong {
     color: var(--gold);
   }
-
+ 
   /* ---------- Submit ---------- */
   .submit-row{
     text-align:center;
@@ -589,7 +589,7 @@
   button.submit:hover{ transform: translateY(-2px); background:#832E24; }
   button.submit:active{ transform: translateY(0); }
   button.submit:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
-
+ 
   .error-msg{
     color: var(--accent);
     font-size: 14px;
@@ -597,7 +597,7 @@
     margin-top: 14px;
     display:none;
   }
-
+ 
   /* ---------- Success state ---------- */
   .success{
     display:none;
@@ -626,7 +626,7 @@
     font-size: 15px;
     margin: 0;
   }
-
+ 
   .whatsapp-btn{
     display: inline-flex;
     align-items: center;
@@ -647,7 +647,7 @@
     background: #1EBE5A;
     transform: translateY(-2px);
   }
-
+ 
   .footer-note{
     text-align:center;
     font-size: 13px;
@@ -657,7 +657,7 @@
 </style>
 </head>
 <body>
-
+ 
 <div class="header">
   <div class="logo">
   <img src="logo.jpeg" alt="لوجو ابني بيتك">
@@ -668,34 +668,34 @@
   <p class="sub">كورس لبناء العلاقة الزوجية على أساس ثابت لا يتزعزع</p>
   <div class="divider"><span></span><div class="line"></div><span></span><div class="line"></div><span></span></div>
 </div>
-
+ 
 <div class="wrap">
-
+ 
   <div class="verse">
     <p>"وَأُعْطِيهِمْ قَلْبًا وَاحِدًا وَطَرِيقًا وَاحِدًا لِيَخَافُونِي كُلَّ الأَيَّامِ،<br>لِخَيْرِهِمْ وَخَيْرِ أَوْلاَدِهِمْ مِنْ بَعْدِهِمْ"</p>
     <span class="verse-ref">(إرميا 32: 39)</span>
   </div>
-
+ 
   <div class="intro">
     <p>
       <strong>الزواج عهدٌ قبل أن يكون علاقة</strong>، وكل عهدٍ يحتاج إلى أساسٍ صلب يُبنى عليه ويثبت أمام تغيّرات الأيام والسنين.
       كثيرٌ من التحديات التي تمر بها الحياة الزوجية لا تنبع من نقصٍ في المحبة، بل من غيابِ أدواتٍ عمليةٍ للفهم والتواصل والنمو معًا.
     </p>
     <p>
-      "صخرة العهد" ليس مجرد كورس، بل رحلة مشتركة سواء لمن هم لا يزالون في بداية الطريق (<strong>المخطوبين</strong>)
-      أو لمن قطعوا شوطًا لا بأس به (<strong>المتزوجين حتى 15 سنة زواج</strong>) ..
+      "صخرة العهد" ليس مجرد كورس، بل رحلة مشتركة سواء لمن هم لا يزالون في بداية الطريق (المخطوبين)
+      أو لمن قطعوا شوطًا لا بأس به (المتزوجين حتى 15 سنة زواج) ..
       لإعادة اكتشاف بعضهما البعض، وترسيخ العلاقة على أساسٍ يشبه الصخرة: ثابت، آمن، ولا يتزعزع.
     </p>
     <p>
       نرحّب بكل زوجين راغبين في الاستثمار في علاقتهما، والانضمام إلى هذه الرحلة معنا.
     </p>
   </div>
-
+ 
   <div class="info-strip">
     <div class="chip">⏳ <b>مدة الكورس:</b>&nbsp;3 شهور</div>
     <div class="chip">🗓️ <b>بداية الكورس:</b>&nbsp;17 سبتمبر</div>
   </div>
-
+ 
   <!-- ===== LOCATION CARD ===== -->
   <div class="location-card">
     <div class="pin">
@@ -719,7 +719,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- ===== PRICE NOTICE (PREMIUM) ===== -->
   <div class="price-notice">
     <div class="price-row">
@@ -741,12 +741,12 @@
 </span>
     </div>
   </div>
-
+ 
   <div class="section-title">
     <h2>استمارة التسجيل</h2>
     <p>من فضلك سجّل بياناتكما معًا للانضمام إلى الكورس</p>
   </div>
-
+ 
   <form id="regForm">
     <div class="tablets">
       <div class="tablet">
@@ -764,7 +764,7 @@
           <input type="date" id="husbandBirth" required>
         </div>
       </div>
-
+ 
       <div class="tablet">
         <span class="tag">الزوجة</span>
         <div class="field">
@@ -781,7 +781,7 @@
         </div>
       </div>
     </div>
-
+ 
     <div class="status-row">
       <label class="status-label">الحالة</label>
       <div class="status-toggle">
@@ -789,13 +789,13 @@
           <input type="radio" name="status" value="متزوجين" checked>
           <span>متزوجين</span>
         </label>
-        <label class="status-option">
+           <label class="status-option">
           <input type="radio" name="status" value="مخطوبين">
           <span>مخطوبين</span>
         </label>
       </div>
     </div>
-
+ 
     <div class="keystone">
       <div class="keystone-grid" id="marriedFieldsContainer">
         <div class="field">
@@ -807,25 +807,25 @@
           <input type="number" id="childrenCount" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="مثال: 2">
         </div>
       </div>
-
+ 
       <!-- ===== DYNAMIC CHILDREN SECTION ===== -->
       <div class="children-section" id="childrenSection">
         <h4>👶 بيانات الأطفال</h4>
         <div id="childrenContainer"></div>
       </div>
-
+ 
       <div class="field" style="margin-top:18px;">
         <label for="churchName">الكنيسة التابعين لها</label>
         <input type="text" id="churchName" placeholder="اسم الكنيسة" required>
       </div>
     </div>
-
+ 
     <div class="submit-row">
       <button type="submit" class="submit" id="submitBtn">تأكيد التسجيل في الكورس</button>
       <div class="error-msg" id="errorMsg">حدث خطأ أثناء الحفظ، من فضلك حاول مرة أخرى.</div>
     </div>
   </form>
-
+ 
   <div class="success" id="successBox">
     <div class="icon">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -836,7 +836,7 @@
     <p>نتشرف بانضمامكما إلى "صخرة العهد" — في انتظاركما بقاعة الدور الأول بالكنيسة الرسولية بأمبابة.</p>
     <p style="margin-top:10px;">سيتم التواصل معكما قريبًا لتأكيد الحجز.</p>
     <p style="margin-top:12px; font-size:14px; color:var(--gold);">💰 ثمن الكورس: 300 ج.م (شاملة المطبوعات والكوفي بريك والبيبي سيتر) · يمكن التقسيط</p>
-
+ 
     <div class="location-card" style="margin-top:24px;">
       <div class="pin">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -860,8 +860,7 @@
       </div>
     </div>
   </div>
-
-  <div class="success" id="duplicateBox" style="display:none;">
+ <div class="success" id="duplicateBox" style="display:none;">
     <div class="icon" style="background: var(--gold);">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 8v5M12 16h.01M12 3l9 16H3L12 3z" stroke="#F3EEE1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -875,7 +874,7 @@
       </svg>
       <span>تواصل معنا على واتساب</span>
     </a>
-
+ 
     <div class="location-card" style="margin-top:24px;">
       <div class="pin">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -899,11 +898,11 @@
       </div>
     </div>
   </div>
-
+ 
   <div class="footer-note">كنيسة أمبابة الرسولية · صخرة العهد</div>
-
+ 
 </div>
-
+ 
 <script>
   // ------------------------------------------------
   // 1. CHILDREN DYNAMIC FIELDS
@@ -912,7 +911,7 @@
   const childrenSection = document.getElementById('childrenSection');
   const childrenContainer = document.getElementById('childrenContainer');
   const childrenCountInput = document.getElementById('childrenCount');
-
+ 
   function updateChildrenFields() {
     const count = parseInt(childrenCountInput.value) || 0;
     childrenContainer.innerHTML = '';
@@ -937,19 +936,19 @@
       childrenSection.classList.remove('visible');
     }
   }
-
+ 
   childrenCountInput.addEventListener('input', updateChildrenFields);
-
+ 
   // ------------------------------------------------
   // 2. STATUS TOGGLE + RESET ديناميكي عند تغيير الحالة
   // ------------------------------------------------
   const marriedFieldsContainer = document.getElementById('marriedFieldsContainer');
   const yearsMarriedInput = document.getElementById('yearsMarried');
   const statusRadios = document.querySelectorAll('input[name="status"]');
-
+ 
   // نحتفظ بآخر حالة معروفة عشان نعرف هل حصل تغيير فعلي يستوجب تصفير البيانات
   let previousStatus = document.querySelector('input[name="status"]:checked').value;
-
+ 
   // يمسح كل البيانات والحقول المرتبطة بحالة "متزوجين" بشكل كامل من الـ DOM
   function resetMarriedRelatedData(){
     yearsMarriedInput.value = '';
@@ -957,16 +956,16 @@
     childrenContainer.innerHTML = '';       // حذف حقول الأطفال نهائيًا من الصفحة
     childrenSection.classList.remove('visible');
   }
-
+ 
   function updateStatusFields(){
     const status = document.querySelector('input[name="status"]:checked').value;
-
+ 
     // لو الحالة اتغيرت فعلاً عن اللي كانت قبل كده، امسح كل بيانات الحالة القديمة
     if(status !== previousStatus){
       resetMarriedRelatedData();
       previousStatus = status;
     }
-
+ 
     if(status === 'مخطوبين'){
       marriedFieldsContainer.style.display = 'none';
       childrenSection.classList.remove('visible');
@@ -978,15 +977,15 @@
       childrenCountInput.required = true;
     }
   }
-
+ 
   statusRadios.forEach(function(radio){
     radio.addEventListener('change', updateStatusFields);
   });
-
+ 
   // تهيئة أولية عند تحميل الصفحة
   updateStatusFields();
   updateChildrenFields();
-
+ 
   // ------------------------------------------------
   // 3. NUMERIC INPUT CLEANUP
   // ------------------------------------------------
@@ -994,18 +993,18 @@
     const input = e.target;
     input.value = input.value.replace(/[^0-9]/g, '');
   }
-
+ 
   function preventInvalidKeys(e) {
     if (['-', '+', 'e', 'E', '.', ','].includes(e.key)) {
       e.preventDefault();
     }
   }
-
+ 
   document.querySelectorAll('input[type="number"]').forEach(function(input) {
     input.addEventListener('input', cleanNumericInput);
     input.addEventListener('keydown', preventInvalidKeys);
   });
-
+ 
   // ------------------------------------------------
   // 4. FORM SUBMISSION
   // ------------------------------------------------
@@ -1015,15 +1014,15 @@
   const successBox = document.getElementById('successBox');
   const duplicateBox = document.getElementById('duplicateBox');
   const SHEETDB_URL = "https://sheetdb.io/api/v1/wnb9qfuidlpbg";
-
+ 
   function normalizePhone(phone) {
     return phone.replace(/\D/g, '').replace(/^0+/, '');
   }
-
+ 
   async function isAlreadyRegistered(husbandPhone, wifePhone) {
     const husbandPhoneNormalized = normalizePhone(husbandPhone);
     const wifePhoneNormalized = normalizePhone(wifePhone);
-
+ 
     try {
       const [r1, r2] = await Promise.all([
         fetch(`${SHEETDB_URL}/search?husbandPhone=${encodeURIComponent(husbandPhoneNormalized)}`),
@@ -1037,11 +1036,11 @@
       return false;
     }
   }
-
+ 
   // أقصى عدد أعمدة أطفال هنجهزها في كل صف (لازم تتطابق مع أعمدة الشيت في جوجل شيتس)
   // لو محتاج أكتر من كده، زوّد الرقم هنا وضيف نفس عدد الأعمدة في الشيت (child6Name, child6Age...)
   const MAX_CHILDREN_COLUMNS = 8;
-
+ 
   function getChildrenColumns() {
     const count = parseInt(childrenCountInput.value) || 0;
     const columns = {};
@@ -1054,7 +1053,7 @@
     }
     return columns;
   }
-
+ 
   // نفس الأعمدة لكن كلها فاضية - تُستخدم لحالة "مخطوبين" اللي مالهاش أطفال أصلاً
   function getEmptyChildrenColumns() {
     const columns = {};
@@ -1064,22 +1063,22 @@
     }
     return columns;
   }
-
+ 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     errorMsg.style.display = 'none';
     duplicateBox.style.display = 'none';
     submitBtn.disabled = true;
     submitBtn.textContent = 'جاري التحقق...';
-
+ 
     const status = document.querySelector('input[name="status"]:checked').value;
-
+ 
     // أعمدة الأطفال منفصلة (child1Name, child1Age, child2Name, child2Age, ...)
     // في حالة "مخطوبين" كل الأعمدة بتتبعت فاضية عشان الصف يفضل نظيف
     const childrenColumns = status === 'مخطوبين'
       ? getEmptyChildrenColumns()
       : getChildrenColumns();
-
+ 
     const entry = {
       status: status,
       husbandName: document.getElementById('husbandName').value.trim(),
@@ -1097,7 +1096,7 @@
         hour12: true
       })
     };
-
+ 
     const alreadyRegistered = await isAlreadyRegistered(entry.husbandPhone, entry.wifePhone);
     if (alreadyRegistered) {
       form.style.display = 'none';
@@ -1106,9 +1105,9 @@
       submitBtn.textContent = 'تأكيد التسجيل في الكورس';
       return;
     }
-
+ 
     submitBtn.textContent = 'جاري الحفظ...';
-
+ 
     try{
       const response = await fetch(SHEETDB_URL, {
         method: "POST",
@@ -1117,7 +1116,7 @@
         },
         body: JSON.stringify({ data: entry })
       });
-
+ 
       if(!response.ok){
         throw new Error('save failed');
       }
@@ -1131,6 +1130,7 @@
     }
   });
 </script>
-
+ 
 </body>
 </html>
+ 
