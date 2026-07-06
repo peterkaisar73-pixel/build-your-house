@@ -911,11 +911,11 @@
         entry.innerHTML = `
           <div class="field">
             <label for="childName_${i}">اسم الطفل ${i}</label>
-            <input type="text" id="childName_${i}" placeholder="اسم الطفل">
+            <input type="text" id="childName_${i}" placeholder="اسم الطفل" required>
           </div>
           <div class="field">
             <label for="childAge_${i}">عمر الطفل ${i}</label>
-            <input type="number" id="childAge_${i}" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="بالسنوات">
+            <input type="number" id="childAge_${i}" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="بالسنوات" required>
           </div>
         `;
         childrenContainer.appendChild(entry);
@@ -923,6 +923,12 @@
     } else {
       childrenSection.classList.remove('visible');
     }
+
+    // إعادة ربط أحداث التنظيف الرقمي بالحقول الجديدة اللي اتضافت للتو
+    childrenContainer.querySelectorAll('input[type="number"]').forEach(function(input) {
+      input.addEventListener('input', cleanNumericInput);
+      input.addEventListener('keydown', preventInvalidKeys);
+    });
   }
 
   childrenCountInput.addEventListener('input', updateChildrenFields);
