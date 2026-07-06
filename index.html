@@ -280,6 +280,12 @@
     margin-bottom: 6px;
   }
 
+  .req-star{
+    color: var(--accent);
+    font-weight: 700;
+    margin-inline-start: 3px;
+  }
+
   input{
     width:100%;
     padding: 12px 14px;
@@ -787,32 +793,32 @@
       <div class="tablet">
         <span class="tag">الزوج</span>
         <div class="field">
-          <label for="husbandName">اسم الزوج</label>
-          <input type="text" id="husbandName" placeholder="الاسم بالكامل" required>
+          <label for="husbandName">اسم الزوج<span class="req-star">*</span></label>
+          <input type="text" id="husbandName" placeholder="الاسم بالكامل" required title="هذا الحقل إجباري">
         </div>
         <div class="field">
-          <label for="husbandPhone">رقم تليفون الزوج</label>
-          <input type="tel" id="husbandPhone" placeholder="01xxxxxxxxx" required>
+          <label for="husbandPhone">رقم تليفون الزوج<span class="req-star">*</span></label>
+          <input type="tel" id="husbandPhone" placeholder="01xxxxxxxxx" required title="هذا الحقل إجباري">
         </div>
         <div class="field">
-          <label for="husbandBirth">تاريخ ميلاد الزوج</label>
-          <input type="date" id="husbandBirth" required>
+          <label for="husbandBirth">تاريخ ميلاد الزوج<span class="req-star">*</span></label>
+          <input type="date" id="husbandBirth" required title="هذا الحقل إجباري">
         </div>
       </div>
 
       <div class="tablet">
         <span class="tag">الزوجة</span>
         <div class="field">
-          <label for="wifeName">اسم الزوجة</label>
-          <input type="text" id="wifeName" placeholder="الاسم بالكامل" required>
+          <label for="wifeName">اسم الزوجة<span class="req-star">*</span></label>
+          <input type="text" id="wifeName" placeholder="الاسم بالكامل" required title="هذا الحقل إجباري">
         </div>
         <div class="field">
-          <label for="wifePhone">رقم تليفون الزوجة</label>
-          <input type="tel" id="wifePhone" placeholder="01xxxxxxxxx" required>
+          <label for="wifePhone">رقم تليفون الزوجة<span class="req-star">*</span></label>
+          <input type="tel" id="wifePhone" placeholder="01xxxxxxxxx" required title="هذا الحقل إجباري">
         </div>
         <div class="field">
-          <label for="wifeBirth">تاريخ ميلاد الزوجة</label>
-          <input type="date" id="wifeBirth" required>
+          <label for="wifeBirth">تاريخ ميلاد الزوجة<span class="req-star">*</span></label>
+          <input type="date" id="wifeBirth" required title="هذا الحقل إجباري">
         </div>
       </div>
     </div>
@@ -834,12 +840,12 @@
     <div class="keystone">
       <div class="keystone-grid" id="marriedFieldsContainer">
         <div class="field">
-          <label for="yearsMarried">عدد سنين الزواج</label>
-          <input type="number" id="yearsMarried" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="مثال: 5">
+          <label for="yearsMarried">عدد سنين الزواج<span class="req-star" id="yearsMarriedStar">*</span></label>
+          <input type="number" id="yearsMarried" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="مثال: 5" title="هذا الحقل إجباري">
         </div>
         <div class="field">
-          <label for="childrenCount">عدد الأطفال</label>
-          <input type="number" id="childrenCount" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="مثال: 2">
+          <label for="childrenCount">عدد الأطفال<span class="req-star" id="childrenCountStar">*</span></label>
+          <input type="number" id="childrenCount" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="مثال: 2" title="هذا الحقل إجباري">
         </div>
       </div>
 
@@ -850,8 +856,8 @@
       </div>
 
       <div class="field" style="margin-top:18px;">
-        <label for="churchName">الكنيسة التابعين لها</label>
-        <input type="text" id="churchName" placeholder="اسم الكنيسة" required>
+        <label for="churchName">الكنيسة التابعين لها<span class="req-star">*</span></label>
+        <input type="text" id="churchName" placeholder="اسم الكنيسة" required title="هذا الحقل إجباري">
       </div>
     </div>
 
@@ -910,12 +916,12 @@
         entry.className = 'child-entry';
         entry.innerHTML = `
           <div class="field">
-            <label for="childName_${i}">اسم الطفل ${i}</label>
-            <input type="text" id="childName_${i}" placeholder="اسم الطفل" required>
+            <label for="childName_${i}">اسم الطفل ${i}<span class="req-star">*</span></label>
+            <input type="text" id="childName_${i}" placeholder="اسم الطفل" required title="هذا الحقل إجباري">
           </div>
           <div class="field">
-            <label for="childAge_${i}">عمر الطفل ${i}</label>
-            <input type="number" id="childAge_${i}" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="بالسنوات" required>
+            <label for="childAge_${i}">عمر الطفل ${i}<span class="req-star">*</span></label>
+            <input type="number" id="childAge_${i}" min="0" step="1" inputmode="numeric" pattern="[0-9]*" placeholder="بالسنوات" required title="هذا الحقل إجباري">
           </div>
         `;
         childrenContainer.appendChild(entry);
@@ -960,15 +966,26 @@
       previousStatus = status;
     }
 
+    const yearsMarriedStar = document.getElementById('yearsMarriedStar');
+    const childrenCountStar = document.getElementById('childrenCountStar');
+
     if(status === 'مخطوبين'){
       marriedFieldsContainer.style.display = 'none';
       childrenSection.classList.remove('visible');
       yearsMarriedInput.required = false;
       childrenCountInput.required = false;
+      yearsMarriedInput.removeAttribute('title');
+      childrenCountInput.removeAttribute('title');
+      if(yearsMarriedStar) yearsMarriedStar.style.display = 'none';
+      if(childrenCountStar) childrenCountStar.style.display = 'none';
     }else{
       marriedFieldsContainer.style.display = '';
       yearsMarriedInput.required = true;
       childrenCountInput.required = true;
+      yearsMarriedInput.title = 'هذا الحقل إجباري';
+      childrenCountInput.title = 'هذا الحقل إجباري';
+      if(yearsMarriedStar) yearsMarriedStar.style.display = '';
+      if(childrenCountStar) childrenCountStar.style.display = '';
     }
   }
 
