@@ -286,6 +286,18 @@
     margin-inline-start: 3px;
   }
 
+  .field-error{
+    display:none;
+    color: var(--accent);
+    font-size: 12.5px;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  input.invalid{
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(151,54,43,0.12) !important;
+  }
+
   input{
     width:100%;
     padding: 12px 14px;
@@ -819,6 +831,7 @@
         <div class="field">
           <label for="husbandBirth">تاريخ ميلاد الزوج<span class="req-star">*</span></label>
           <input type="date" id="husbandBirth" required title="هذا الحقل إجباري">
+          <span class="field-error" id="husbandBirthError">يجب ألا يقل عمر الزوج عن 19 سنة</span>
         </div>
       </div>
 
@@ -835,6 +848,7 @@
         <div class="field">
           <label for="wifeBirth">تاريخ ميلاد الزوجة<span class="req-star">*</span></label>
           <input type="date" id="wifeBirth" required title="هذا الحقل إجباري">
+          <span class="field-error" id="wifeBirthError">يجب ألا يقل عمر الزوجة عن 19 سنة</span>
         </div>
       </div>
     </div>
@@ -1014,6 +1028,63 @@
   updateChildrenFields();
 
   // ------------------------------------------------
+  // 2b. BIRTH DATE AGE VALIDATION (minimum 19 years)
+  // ------------------------------------------------
+  const MIN_AGE = 19;
+  const husbandBirthInput = document.getElementById('husbandBirth');
+  const wifeBirthInput = document.getElementById('wifeBirth');
+  const husbandBirthError = document.getElementById('husbandBirthError');
+  const wifeBirthError = document.getElementById('wifeBirthError');
+
+  // نمنع اختيار أي تاريخ من التقويم نفسه يدّي عمر أقل من MIN_AGE سنة
+  // (يعني لو النهاردة 2026، أقصى تاريخ مسموح بيه هيبقى نفس اليوم بس سنة 2007)
+  (function setMaxBirthDate(){
+    const today = new Date();
+    const maxDate = new Date(today.getFullYear() - MIN_AGE, today.getMonth(), today.getDate());
+    const yyyy = maxDate.getFullYear();
+    const mm = String(maxDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(maxDate.getDate()).padStart(2, '0');
+    const maxStr = `${yyyy}-${mm}-${dd}`;
+    husbandBirthInput.setAttribute('max', maxStr);
+    wifeBirthInput.setAttribute('max', maxStr);
+  })();
+
+  function calculateAge(dateStr){
+    if(!dateStr) return null;
+    const birth = new Date(dateStr);
+    if(isNaN(birth.getTime())) return null;
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if(m < 0 || (m === 0 && today.getDate() < birth.getDate())){
+      age--;
+    }
+    return age;
+  }
+
+  function validateBirthField(input, errorEl){
+    const dateStr = input.value;
+    if(!dateStr){
+      input.classList.remove('invalid');
+      errorEl.style.display = 'none';
+      return true;
+    }
+    const age = calculateAge(dateStr);
+    if(age === null || age < MIN_AGE){
+      input.classList.add('invalid');
+      errorEl.style.display = 'block';
+      return false;
+    }else{
+      input.classList.remove('invalid');
+      errorEl.style.display = 'none';
+      return true;
+    }
+  }
+
+  husbandBirthInput.addEventListener('change', function(){ validateBirthField(husbandBirthInput, husbandBirthError); });
+  wifeBirthInput.addEventListener('change', function(){ validateBirthField(wifeBirthInput, wifeBirthError); });
+
+  // ------------------------------------------------
   // 3. NUMERIC INPUT CLEANUP
   // ------------------------------------------------
   function cleanNumericInput(e) {
@@ -1118,6 +1189,15 @@
     e.preventDefault();
     errorMsg.style.display = 'none';
     duplicateBox.style.display = 'none';
+    const husbandAgeValid = validateBirthField(husbandBirthInput, husbandBirthError);
+    const wifeAgeValid = validateBirthField(wifeBirthInput, wifeBirthError);
+    if(!husbandAgeValid || !wifeAgeValid){
+      const firstInvalid = !husbandAgeValid ? husbandBirthInput : wifeBirthInput;
+      firstInvalid.focus();
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
     submitBtn.disabled = true;
     submitBtn.textContent = 'جاري التحقق...';
 
