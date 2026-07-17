@@ -430,7 +430,7 @@
     box-shadow: 0 0 0 3px rgba(201,162,92,0.2);
   }
 
-  /* ---------- Location Card ---------- */
+  /* ---------- Location / Schedule Card ---------- */
   .location-card{
     background: var(--card);
     border: 1px solid var(--stone-line);
@@ -737,6 +737,22 @@
     <div class="chip">🗓️ <b>بداية الكورس:</b>&nbsp;17 سبتمبر</div>
   </div>
 
+  <!-- ===== SCHEDULE CARD ===== -->
+  <div class="location-card" id="scheduleCard">
+    <div class="pin">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="9" stroke="#F3EEE1" stroke-width="1.8"/>
+        <path d="M12 7v5l3.5 2" stroke="#F3EEE1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="location-body">
+      <p class="location-title">نظام الدراسة</p>
+      <p class="location-line">🗓️ <b>موعد اللقاء:</b> كل خميس من كل أسبوع</p>
+      <p class="location-line">☕ <b>كوفي بريك:</b> من الساعة 6:30 مساءً</p>
+      <p class="location-line">📖 <b>المحاضرة والمجموعات:</b> من 7 م حتى 9 م</p>
+    </div>
+  </div>
+
   <!-- ===== LOCATION CARD ===== -->
   <div class="location-card" id="mainLocationCard">
     <div class="pin">
@@ -1024,6 +1040,7 @@
       'verseSection',
       'introSection',
       'infoStripSection',
+      'scheduleCard',
       'mainLocationCard',
       'priceNoticeSection',
       'sectionTitleForm'
